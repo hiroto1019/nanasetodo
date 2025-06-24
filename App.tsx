@@ -181,9 +181,11 @@ useEffect(() => {
     );
 
     try {
+      const updateData = { isFavorite: !targetTodo.isFavorite, updatedAt: new Date().toISOString() };
+      console.log('toggleFavorite updateData', updateData);
       const { error } = await supabase
         .from('todos')
-        .update({ isFavorite: !targetTodo.isFavorite, updatedAt: new Date().toISOString() })
+        .update(updateData)
         .eq('id', id);
       if (error) {
         alert('データベースの更新に失敗しました');
@@ -287,6 +289,7 @@ useEffect(() => {
       if ('isFavorite' in data) updateData.isFavorite = data.isFavorite;
       if ('completed' in data) updateData.completed = data.completed;
       if ('deleted' in data) updateData.deleted = data.deleted;
+      console.log('updateData', updateData);
       const { error } = await supabase
         .from('todos')
         .update(updateData)
