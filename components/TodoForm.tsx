@@ -122,7 +122,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
         )}
         <button
           type="submit"
-          className="px-5 py-2.5 flex items-center justify-center text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-50 dark:focus:ring-offset-slate-800 focus:ring-blue-500 transition-colors"
+          className="px-5 py-2.5 flex items-center justify-center text-sm font-semibold text-white bg-blue-300 hover:bg-blue-700 dark:bg-blue-300 dark:hover:bg-blue-600 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-50 dark:focus:ring-offset-slate-600 focus:ring-blue-500 transition-colors"
         >
           {isEditing ? 'Save Changes' : (
             <>

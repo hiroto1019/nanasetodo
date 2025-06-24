@@ -10,27 +10,33 @@
 
 /* 「パスワードを忘れましたか？」のリンクをグレーにする */
 a[href="#auth-forgot-password"] {
-    color: #6b7280 !important; /* グレー (最優先) */
+    color: #909aaf !important; /* グレー (最優先) */
     text-decoration: none !important;
   }
   
   /* 「サインアップを行う」のリンクを緑にする */
   a[href="#auth-sign-up"] {
-    color: #22c55e !important; /* 明るい緑 (最優先) */
+    color: #1697ce !important; /* 明るい緑 (最優先) */
     text-decoration: none !important;
   }
   
   /* 「新規登録を行う」のリンクを緑にする */
   /* 「Don't have an account?」のテキストを持つ親要素の中のリンクを特定 */
   div:has(> span:first-child[data-type="sign_in_up_prompt_text"]) > a {
-    color: #22c55e !important; /* 明るい緑 (重要度を最大に) */
+    color: #1ea1ff !important; /* 明るい緑 (重要度を最大に) */
     text-decoration: none !important; /* 下線を消す */
     transition: color 0.2s;
   }
   div:has(> span:first-child[data-type="sign_in_up_prompt_text"]) > a:hover {
-    color: #16a34a !important; /* 少し濃い緑 */
+    color: #337bff !important; /* 少し濃い緑 */
   }
   input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
     display: none;
+    -webkit-appearance: none;
   }
+  input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
