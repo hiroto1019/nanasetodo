@@ -160,7 +160,7 @@ useEffect(() => {
     try {
       const { error } = await supabase
         .from('todos')
-        .update({ completed: !targetTodo.completed, updatedAt: new Date().toISOString() })
+        .update({ completed: !targetTodo.completed, updated_at: new Date().toISOString() })
         .eq('id', id);
       if (error) {
         alert('データベースの更新に失敗しました');
@@ -181,7 +181,7 @@ useEffect(() => {
     );
 
     try {
-      const updateData = { isFavorite: !targetTodo.isFavorite, updatedAt: new Date().toISOString() };
+      const updateData = { is_favorite: !targetTodo.isFavorite, updated_at: new Date().toISOString() };
       console.log('toggleFavorite updateData', updateData);
       const { error } = await supabase
         .from('todos')
@@ -208,7 +208,7 @@ useEffect(() => {
     try {
       const { error } = await supabase
         .from('todos')
-        .update({ deleted: true, updatedAt: new Date().toISOString() })
+        .update({ deleted: true, updated_at: new Date().toISOString() })
         .eq('id', id);
       if (error) {
         alert('データベースの更新に失敗しました');
@@ -231,7 +231,7 @@ useEffect(() => {
     try {
       const { error } = await supabase
         .from('todos')
-        .update({ deleted: false, completed: false, updatedAt: new Date().toISOString() })
+        .update({ deleted: false, completed: false, updated_at: new Date().toISOString() })
         .eq('id', id);
       if (error) {
         alert('データベースの更新に失敗しました');
@@ -278,18 +278,17 @@ useEffect(() => {
     );
     handleCloseEditModal();
     try {
-      // 必要なカラムだけ送る
+      // 必要なカラムだけ送る（スネークケースで！）
       const updateData: any = {
-        updatedAt: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       };
       if ('text' in data) updateData.text = data.text;
       if ('details' in data) updateData.details = data.details;
-      if ('dueDate' in data) updateData.dueDate = data.dueDate;
+      if ('dueDate' in data) updateData.due_date = data.dueDate;
       if ('tag' in data) updateData.tag = data.tag;
-      if ('isFavorite' in data) updateData.isFavorite = data.isFavorite;
+      if ('isFavorite' in data) updateData.is_favorite = data.isFavorite;
       if ('completed' in data) updateData.completed = data.completed;
       if ('deleted' in data) updateData.deleted = data.deleted;
-      console.log('updateData', updateData);
       const { error } = await supabase
         .from('todos')
         .update(updateData)
