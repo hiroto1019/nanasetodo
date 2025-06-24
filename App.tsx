@@ -481,6 +481,7 @@ localization={{
             <button
               onClick={async () => {
                 const { error } = await supabase.auth.signOut();
+                setSession(null);
                 if (error) {
                   alert('ログアウトに失敗しました: ' + error.message);
                 }
