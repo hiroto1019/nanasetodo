@@ -480,10 +480,15 @@ localization={{
           <div className="flex items-center gap-4">
             <button
               onClick={async () => {
-                const { error } = await supabase.auth.signOut();
-                setSession(null);
-                if (error) {
-                  alert('ログアウトに失敗しました: ' + error.message);
+                try {
+                  const { error } = await supabase.auth.signOut();
+                  setSession(null); // UI上は必ずログアウト状態に
+                  if (error && error.status !== 403) {
+                    alert('ログアウトに失敗しました: ' + error.message);
+                  }
+                } catch (e) {
+                  setSession(null); // 万一の例外時もUI上はログアウト
+                  alert('予期せぬエラーが発生しました');
                 }
               }}
               className="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-md shadow-sm"
