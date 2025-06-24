@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* index.css にこれを貼り付け */
+
+/* === Supabase Auth UI カスタマイズ (最終確定版) === */
+
+/* === Supabase Auth UI カスタマイズ (最終確定版) === */
+
+/* 「パスワードを忘れましたか？」のリンクをグレーにする */
+a[href="#auth-forgot-password"] {
+    color: #6b7280 !important; /* グレー (最優先) */
+    text-decoration: none !important;
+  }
+  
+  /* 「サインアップを行う」のリンクを緑にする */
+  a[href="#auth-sign-up"] {
+    color: #22c55e !important; /* 明るい緑 (最優先) */
+    text-decoration: none !important;
+  }
+  
+  /* 「新規登録を行う」のリンクを緑にする */
+  /* 「Don't have an account?」のテキストを持つ親要素の中のリンクを特定 */
+  div:has(> span:first-child[data-type="sign_in_up_prompt_text"]) > a {
+    color: #22c55e !important; /* 明るい緑 (重要度を最大に) */
+    text-decoration: none !important; /* 下線を消す */
+    transition: color 0.2s;
+  }
+  div:has(> span:first-child[data-type="sign_in_up_prompt_text"]) > a:hover {
+    color: #16a34a !important; /* 少し濃い緑 */
+  }
