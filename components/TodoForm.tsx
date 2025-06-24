@@ -76,9 +76,6 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
               onChange={(e) => setDueDate(e.target.value)}
               className="w-full p-3 pr-10 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-              <CalendarIcon className="w-5 h-5 text-slate-400 dark:text-white" />
-            </span>
           </div>
         </div>
         <div>
@@ -91,8 +88,8 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
             value={tag}
             onChange={(e) => setTag(e.target.value)}
             placeholder="e.g., Work, Personal"
-            className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
-          />
+            className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:bg-slate-100 dark:focus:bg-slate-700 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
+/>
         </div>
       </div>
 
@@ -106,7 +103,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
           onChange={(e) => setDetails(e.target.value)}
           placeholder="Add more details about the task..."
           rows={3}
-          className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
+          className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:bg-slate-100 dark:focus:bg-slate-700 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
         />
       </div>
 
@@ -122,7 +119,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
         )}
         <button
           type="submit"
-          className="px-5 py-2.5 flex items-center justify-center text-sm font-semibold text-white bg-blue-300 hover:bg-blue-700 dark:bg-blue-300 dark:hover:bg-blue-600 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-50 dark:focus:ring-offset-slate-600 focus:ring-blue-500 transition-colors"
+          className="px-5 py-2.5 flex items-center justify-center text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-600 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-50 dark:focus:ring-offset-slate-600 focus:ring-blue-500 transition-colors"
         >
           {isEditing ? 'Save Changes' : (
             <>
