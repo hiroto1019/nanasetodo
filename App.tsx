@@ -322,7 +322,7 @@ return (
     },
   }}
   theme={theme}
-  providers={['github', 'google']}
+  providers={['github']}
   view="sign_in"
   // App.tsxのAuthコンポーネントのlocalizationプロパティ
 localization={{
