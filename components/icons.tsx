@@ -57,3 +57,9 @@ export const SunIcon: React.FC<{ className?: string }> = ({ className }) => (
 export const MoonIcon: React.FC<{ className?: string }> = ({ className }) => (
   <IconBase iconName="dark_mode" className={className} />
 );
+
+export const CalendarIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <span className={`material-symbols-outlined ${className || ''}`}>
+    calendar_month
+  </span>
+);
