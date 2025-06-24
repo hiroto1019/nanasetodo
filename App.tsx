@@ -181,13 +181,14 @@ useEffect(() => {
     );
 
     try {
-      const updateData = { is_favorite: !targetTodo.isFavorite, updated_at: new Date().toISOString() };
+      const updateData = { is_favorite: !targetTodo.isFavorite };
       console.log('toggleFavorite updateData', updateData);
       const { error } = await supabase
         .from('todos')
         .update(updateData)
         .eq('id', id);
       if (error) {
+        console.log('Supabase error:', error);
         alert('データベースの更新に失敗しました');
       }
     } catch (e) {
