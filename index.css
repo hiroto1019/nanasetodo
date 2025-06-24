@@ -30,3 +30,7 @@ a[href="#auth-forgot-password"] {
   div:has(> span:first-child[data-type="sign_in_up_prompt_text"]) > a:hover {
     color: #16a34a !important; /* 少し濃い緑 */
   }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    display: none;
+  }
