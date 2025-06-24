@@ -465,7 +465,12 @@ localization={{
            {/* ログアウトボタン */}
           <div className="flex items-center gap-4">
             <button
-              onClick={() => supabase.auth.signOut()}
+              onClick={async () => {
+                const { error } = await supabase.auth.signOut();
+                if (error) {
+                  alert('ログアウトに失敗しました: ' + error.message);
+                }
+              }}
               className="px-3 py-1.5 text-sm font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-md shadow-sm"
             >
               ログアウト
