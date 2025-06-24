@@ -72,12 +72,12 @@ useEffect(() => {
           .eq('user_id', session.user.id)
           .order('created_at', { ascending: false });
 
-        if (error) {
+        if (data) {
+          setTodos(data.map(mapDbTodoToAppTodo));
+        } else if (error) {
           console.error('Error fetching todos:', error);
           alert(error.message);
-        } else if (data) {
-          setTodos(data);
-        }
+        } 
       } catch (error) {
           console.error('An unexpected error occurred:', error);
       } finally {
@@ -134,14 +134,13 @@ useEffect(() => {
         .select()
         .single(); // 1件だけ返ってくるので .single() を使う
 
-      if (error) {
+      if (insertedTodo) {
+        setTodos(prev => [mapDbTodoToAppTodo(insertedTodo), ...prev]);
+        handleCloseAddModal();
+      } else if (error) {
         console.error("Error adding todo:", error);
         alert(error.message);
-      } else if (insertedTodo) {
-        // 成功した場合、返ってきたDBのデータを使ってReactの状態を更新
-        setTodos(prevTodos => [insertedTodo, ...prevTodos]);
-        handleCloseAddModal();
-      }
+      } 
     } catch (error) {
       console.error("An unexpected error occurred:", error);
     }
@@ -272,28 +271,32 @@ useEffect(() => {
 
   const handleUpdateTodo = useCallback(async (data: TodoFormData) => {
     if (!editingTodo) return;
+
     setTodos(prevTodos =>
       prevTodos.map(todo =>
         todo.id === editingTodo.id ? { ...editingTodo, ...data, updatedAt: Date.now() } : todo
       )
     );
     handleCloseEditModal();
+
     try {
-      // 必要なカラムだけ送る（スネークケースで！）
-      const updateData: any = {
+      // 必要なカラムだけ送る（undefined/nullは除外）
+      const updateData: Record<string, any> = {
         updated_at: new Date().toISOString(),
       };
-      if ('text' in data) updateData.text = data.text;
-      if ('details' in data) updateData.details = data.details;
-      if ('dueDate' in data) updateData.due_date = data.dueDate;
-      if ('tag' in data) updateData.tag = data.tag;
-      if ('isFavorite' in data) updateData.is_favorite = data.isFavorite;
-      if ('completed' in data) updateData.completed = data.completed;
-      if ('deleted' in data) updateData.deleted = data.deleted;
+      if (typeof data.text === 'string') updateData.text = data.text;
+      if (typeof data.details === 'string') updateData.details = data.details;
+      if (typeof data.dueDate === 'string' || data.dueDate === null) updateData.due_date = data.dueDate;
+      if (typeof data.tag === 'string') updateData.tag = data.tag;
+      if (typeof data.isFavorite === 'boolean') updateData.is_favorite = data.isFavorite;
+      if (typeof data.completed === 'boolean') updateData.completed = data.completed;
+      if (typeof data.deleted === 'boolean') updateData.deleted = data.deleted;
+
       const { error } = await supabase
         .from('todos')
         .update(updateData)
         .eq('id', editingTodo.id);
+
       if (error) {
         alert('データベースの更新に失敗しました');
       }
@@ -394,6 +397,17 @@ useEffect(() => {
         document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isDisplayOptionsOpen]);
+
+// DBのtodoをReact用に変換
+function mapDbTodoToAppTodo(dbTodo: any): Todo {
+  return {
+    ...dbTodo,
+    isFavorite: dbTodo.is_favorite ?? false,
+    createdAt: new Date(dbTodo.created_at).getTime(),
+    updatedAt: dbTodo.updated_at ? new Date(dbTodo.updated_at).getTime() : 0,
+    dueDate: dbTodo.due_date ?? null,
+  };
+}
 
 // App.tsx の return 以降を置き換える
 
