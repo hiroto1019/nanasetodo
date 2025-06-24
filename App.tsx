@@ -147,42 +147,120 @@ useEffect(() => {
     }
   }, [session]); // sessionに依存するようになったので追加
 
-  const toggleComplete = useCallback((id: string) => {
+  const toggleComplete = useCallback(async (id: string) => {
+    const targetTodo = todos.find(todo => todo.id === id);
+    if (!targetTodo) return;
+
+    // まずローカルのstateを更新
     setTodos(prevTodos =>
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, completed: !todo.completed, updatedAt: Date.now() } : todo
       )
     );
-  }, []);
 
-  const toggleFavorite = useCallback((id: string) => {
+    // Supabaseにも反映
+    try {
+      const { error } = await supabase
+        .from('todos')
+        .update({ completed: !targetTodo.completed, updatedAt: Date.now() })
+        .eq('id', id);
+
+      if (error) {
+        alert('データベースの更新に失敗しました');
+        // 失敗時はローカルstateを元に戻すなどの処理も検討
+      }
+    } catch (e) {
+      alert('予期せぬエラーが発生しました');
+    }
+  }, [todos]);
+
+  const toggleFavorite = useCallback(async (id: string) => {
+    const targetTodo = todos.find(todo => todo.id === id);
+    if (!targetTodo) return;
+
+    // まずローカルのstateを更新
     setTodos(prevTodos =>
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, isFavorite: !todo.isFavorite, updatedAt: Date.now() } : todo
       )
     );
-  }, []);
 
-  const softDeleteTodo = useCallback((id: string) => {
+    // Supabaseにも反映
+    try {
+      const { error } = await supabase
+        .from('todos')
+        .update({ isFavorite: !targetTodo.isFavorite, updatedAt: Date.now() })
+        .eq('id', id);
+      if (error) {
+        alert('データベースの更新に失敗しました');
+      }
+    } catch (e) {
+      alert('予期せぬエラーが発生しました');
+    }
+  }, [todos]);
+
+  const softDeleteTodo = useCallback(async (id: string) => {
+    const targetTodo = todos.find(todo => todo.id === id);
+    if (!targetTodo) return;
+
     setTodos(prevTodos =>
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, deleted: true, updatedAt: Date.now() } : todo
       )
     );
-  }, []);
 
-  const restoreTodo = useCallback((id: string) => {
+    try {
+      const { error } = await supabase
+        .from('todos')
+        .update({ deleted: true, updatedAt: Date.now() })
+        .eq('id', id);
+      if (error) {
+        alert('データベースの更新に失敗しました');
+      }
+    } catch (e) {
+      alert('予期せぬエラーが発生しました');
+    }
+  }, [todos]);
+
+  const restoreTodo = useCallback(async (id: string) => {
+    const targetTodo = todos.find(todo => todo.id === id);
+    if (!targetTodo) return;
+
     setTodos(prevTodos =>
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, deleted: false, completed: false, updatedAt: Date.now() } : todo
       )
     );
-  }, []);
+
+    try {
+      const { error } = await supabase
+        .from('todos')
+        .update({ deleted: false, completed: false, updatedAt: Date.now() })
+        .eq('id', id);
+      if (error) {
+        alert('データベースの更新に失敗しました');
+      }
+    } catch (e) {
+      alert('予期せぬエラーが発生しました');
+    }
+  }, [todos]);
   
-  const permanentDeleteTodo = useCallback((id: string) => {
-    if (window.confirm('このタスクを完全に削除しますか？この操作は元に戻せません。')) {
-        setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
-     }
+  const permanentDeleteTodo = useCallback(async (id: string) => {
+    if (!window.confirm('このタスクを完全に削除しますか？この操作は元に戻せません。')) {
+      return;
+    }
+    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+    try {
+      const { error } = await supabase
+        .from('todos')
+        .delete()
+        .eq('id', id);
+      if (error) {
+        alert('データベースからの削除に失敗しました');
+      }
+    } catch (e) {
+      alert('予期せぬエラーが発生しました');
+    }
   }, []);
 
   const handleStartEdit = useCallback((todo: Todo) => {
@@ -195,7 +273,7 @@ useEffect(() => {
     setEditingTodo(null);
   }
 
-  const handleUpdateTodo = useCallback((data: TodoFormData) => {
+  const handleUpdateTodo = useCallback(async (data: TodoFormData) => {
     if (!editingTodo) return;
     setTodos(prevTodos =>
       prevTodos.map(todo =>
@@ -203,6 +281,17 @@ useEffect(() => {
       )
     );
     handleCloseEditModal();
+    try {
+      const { error } = await supabase
+        .from('todos')
+        .update({ ...data, updatedAt: Date.now() })
+        .eq('id', editingTodo.id);
+      if (error) {
+        alert('データベースの更新に失敗しました');
+      }
+    } catch (e) {
+      alert('予期せぬエラーが発生しました');
+    }
   }, [editingTodo]);
 
   const tagsWithCount = useMemo(() => {
