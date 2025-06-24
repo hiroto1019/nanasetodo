@@ -1,0 +1,6 @@
+{
+  "name": "Stylish Todo App",
+  "description": "A beautiful and functional Todo application to manage your tasks. Phase 1 includes core CRUD operations, task details, filtering, and responsive design.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
