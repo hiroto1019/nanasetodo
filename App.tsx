@@ -113,26 +113,25 @@ useEffect(() => {
   const handleCloseAddModal = () => setIsAddModalOpen(false);
 
   const addTodo = useCallback(async (data: TodoFormData) => {
-    // ログインしていない場合は処理を中断
     if (!session?.user) {
       alert("ログインしてください。");
       return;
     }
 
     try {
-      // データベースに挿入する新しいTodoオブジェクトを作成
-      // idとcreatedAtはDBが自動生成するので不要
+      // dueDate → due_date に変換
       const newTodoData = {
         ...data,
-        user_id: session.user.id, // 誰が作ったタスクか、ユーザーIDを紐付ける
+        due_date: data.dueDate ?? null, // ここで変換
+        user_id: session.user.id,
       };
-      
-      // Supabaseのtodosテーブルにデータを1件挿入し、その結果を返してもらう(.select())
+      delete newTodoData.dueDate; // キャメルケースは削除
+
       const { data: insertedTodo, error } = await supabase
         .from('todos')
         .insert(newTodoData)
         .select()
-        .single(); // 1件だけ返ってくるので .single() を使う
+        .single();
 
       if (insertedTodo) {
         setTodos(prev => [mapDbTodoToAppTodo(insertedTodo), ...prev]);
