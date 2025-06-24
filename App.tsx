@@ -151,23 +151,19 @@ useEffect(() => {
     const targetTodo = todos.find(todo => todo.id === id);
     if (!targetTodo) return;
 
-    // まずローカルのstateを更新
     setTodos(prevTodos =>
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, completed: !todo.completed, updatedAt: Date.now() } : todo
       )
     );
 
-    // Supabaseにも反映
     try {
       const { error } = await supabase
         .from('todos')
-        .update({ completed: !targetTodo.completed, updatedAt: Date.now() })
+        .update({ completed: !targetTodo.completed, updatedAt: new Date().toISOString() })
         .eq('id', id);
-
       if (error) {
         alert('データベースの更新に失敗しました');
-        // 失敗時はローカルstateを元に戻すなどの処理も検討
       }
     } catch (e) {
       alert('予期せぬエラーが発生しました');
@@ -178,18 +174,16 @@ useEffect(() => {
     const targetTodo = todos.find(todo => todo.id === id);
     if (!targetTodo) return;
 
-    // まずローカルのstateを更新
     setTodos(prevTodos =>
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, isFavorite: !todo.isFavorite, updatedAt: Date.now() } : todo
       )
     );
 
-    // Supabaseにも反映
     try {
       const { error } = await supabase
         .from('todos')
-        .update({ isFavorite: !targetTodo.isFavorite, updatedAt: Date.now() })
+        .update({ isFavorite: !targetTodo.isFavorite, updatedAt: new Date().toISOString() })
         .eq('id', id);
       if (error) {
         alert('データベースの更新に失敗しました');
@@ -212,7 +206,7 @@ useEffect(() => {
     try {
       const { error } = await supabase
         .from('todos')
-        .update({ deleted: true, updatedAt: Date.now() })
+        .update({ deleted: true, updatedAt: new Date().toISOString() })
         .eq('id', id);
       if (error) {
         alert('データベースの更新に失敗しました');
@@ -235,7 +229,7 @@ useEffect(() => {
     try {
       const { error } = await supabase
         .from('todos')
-        .update({ deleted: false, completed: false, updatedAt: Date.now() })
+        .update({ deleted: false, completed: false, updatedAt: new Date().toISOString() })
         .eq('id', id);
       if (error) {
         alert('データベースの更新に失敗しました');
@@ -282,9 +276,20 @@ useEffect(() => {
     );
     handleCloseEditModal();
     try {
+      // 必要なカラムだけ送る
+      const updateData: any = {
+        updatedAt: new Date().toISOString(),
+      };
+      if ('text' in data) updateData.text = data.text;
+      if ('details' in data) updateData.details = data.details;
+      if ('dueDate' in data) updateData.dueDate = data.dueDate;
+      if ('tag' in data) updateData.tag = data.tag;
+      if ('isFavorite' in data) updateData.isFavorite = data.isFavorite;
+      if ('completed' in data) updateData.completed = data.completed;
+      if ('deleted' in data) updateData.deleted = data.deleted;
       const { error } = await supabase
         .from('todos')
-        .update({ ...data, updatedAt: Date.now() })
+        .update(updateData)
         .eq('id', editingTodo.id);
       if (error) {
         alert('データベースの更新に失敗しました');
