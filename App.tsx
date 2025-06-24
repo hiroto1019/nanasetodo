@@ -225,14 +225,14 @@ useEffect(() => {
 
     setTodos(prevTodos =>
       prevTodos.map(todo =>
-        todo.id === id ? { ...todo, deleted: false, completed: false, updatedAt: Date.now() } : todo
+        todo.id === id ? { ...todo, deleted: false, updatedAt: Date.now() } : todo
       )
     );
 
     try {
       const { error } = await supabase
         .from('todos')
-        .update({ deleted: false, completed: false, updated_at: new Date().toISOString() })
+        .update({ deleted: false, updated_at: new Date().toISOString() })
         .eq('id', id);
       if (error) {
         alert('データベースの更新に失敗しました');
