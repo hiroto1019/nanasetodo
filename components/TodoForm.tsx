@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Todo, TodoFormData } from '../types';
-import { PlusIcon } from './icons';
+import { PlusIcon, CalendarIcon } from './icons';
 
 interface TodoFormProps {
   onSubmit: (data: TodoFormData) => void;
@@ -56,7 +56,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="What needs to be done?"
-          className="w-full p-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
+          className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
           required
           aria-required="true"
         />
@@ -67,14 +67,19 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
           <label htmlFor={`todo-duedate-${isEditing ? 'edit' : 'add'}`} className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             Due Date (Optional)
           </label>
-          <input
-            id={`todo-duedate-${isEditing ? 'edit' : 'add'}`}
-            type="date"
-            value={dueDate}
-            min={new Date().toISOString().split('T')[0]} 
-            onChange={(e) => setDueDate(e.target.value)}
-            className="w-full p-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
-          />
+          <div className="relative">
+            <input
+              id={`todo-duedate-${isEditing ? 'edit' : 'add'}`}
+              type="date"
+              value={dueDate}
+              min={new Date().toISOString().split('T')[0]} 
+              onChange={(e) => setDueDate(e.target.value)}
+              className="w-full p-3 pr-10 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
+            />
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+              <CalendarIcon className="w-5 h-5 text-slate-400 dark:text-white" />
+            </span>
+          </div>
         </div>
         <div>
           <label htmlFor={`todo-tag-${isEditing ? 'edit' : 'add'}`} className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
@@ -86,7 +91,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
             value={tag}
             onChange={(e) => setTag(e.target.value)}
             placeholder="e.g., Work, Personal"
-            className="w-full p-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
+            className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
           />
         </div>
       </div>
@@ -101,7 +106,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
           onChange={(e) => setDetails(e.target.value)}
           placeholder="Add more details about the task..."
           rows={3}
-          className="w-full p-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
+          className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
         />
       </div>
 
