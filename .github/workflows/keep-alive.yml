@@ -1,0 +1,29 @@
+# ワークフローの名前
+name: Keep Alive Ping
+
+# 実行のトリガー（きっかけ）
+on:
+  # 手動で実行できるようにする
+  workflow_dispatch:
+  # スケジュール実行
+  schedule:
+    # 毎週月曜日の午前9時(JST)に実行
+    # cronの書式: 分 時 日 月 曜日 (UTC時刻で指定)
+    - cron: '0 0 * * 1'
+
+# 実行するジョブ
+jobs:
+  ping:
+    # Ubuntuの最新版で実行
+    runs-on: ubuntu-latest
+
+    # ジョブ内のステップ
+    steps:
+      - name: Send a ping to Supabase
+        # curlコマンドでSupabaseのtodosテーブルから1件だけデータを取得するリクエストを送る
+        # これによりAPIアクセスが記録され、プロジェクトがアクティブになる
+        run: |
+          curl -X GET \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/todos?select=*&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
