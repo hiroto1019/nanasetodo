@@ -506,8 +506,8 @@ localization={{
         </header>
 
         <main>
-           <div className="mb-4 md:mb-6 flex flex-col sm:flex-row justify-between items-center sm:items-stretch gap-3 sm:gap-4">
-              <div className="w-full sm:w-auto"> 
+           <div className="mb-4 md:mb-6 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+              <div className="w-full sm:w-auto flex-shrink-0"> 
               <FilterControls currentFilter={filter} onFilterChange={setFilter} />
               </div>
               <div className="relative w-full sm:flex-grow">
@@ -516,10 +516,10 @@ localization={{
                   placeholder="タイトルや詳細で検索..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full p-2.5 pl-10 pr-4 h-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
+                  className="w-full p-2.5 pl-8 pr-4 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
                   aria-label="タスクをタイトルや詳細で検索"
               />
-              <SearchIcon className="text-lg text-slate-400 dark:text-slate-500 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+              <SearchIcon className="text-lg text-slate-400 dark:text-slate-500 absolute left-2.5 top-1/2 transform -translate-y-1/2 pointer-events-none" />
               </div>
           </div>
           
@@ -527,7 +527,7 @@ localization={{
               <button
               id="display-options-trigger"
               onClick={() => setIsDisplayOptionsOpen(!isDisplayOptionsOpen)}
-              className="w-full sm:w-auto px-4 py-2.5 flex items-center justify-center text-sm font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 dark:focus:ring-offset-slate-900 transition-colors"
+              className="w-full sm:w-auto px-4 py-2.5 h-10 flex items-center justify-center text-sm font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 dark:focus:ring-offset-slate-900 transition-colors"
               aria-expanded={isDisplayOptionsOpen}
               aria-controls="display-options-panel"
               >
