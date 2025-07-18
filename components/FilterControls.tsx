@@ -8,8 +8,8 @@ interface FilterControlsProps {
 
 const FilterControls: React.FC<FilterControlsProps> = ({ currentFilter, onFilterChange }) => {
   const filters: { label: string; value: FilterType }[] = [
-    { label: 'Home', value: FilterType.HOME },
-    { label: 'Trash', value: FilterType.TRASH },
+    { label: 'ホーム', value: FilterType.HOME },
+    { label: 'ゴミ箱', value: FilterType.TRASH },
   ];
 
   return (

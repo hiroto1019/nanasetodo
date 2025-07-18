@@ -33,7 +33,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) {
-      alert('Task text cannot be empty.'); 
+      alert('タスクの内容を入力してください。'); 
       return;
     }
     onSubmit({
@@ -48,14 +48,14 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor={`todo-text-${isEditing ? 'edit' : 'add'}`} className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-          Task Description
+          タスクの内容
         </label>
         <input
           id={`todo-text-${isEditing ? 'edit' : 'add'}`}
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="What needs to be done?"
+          placeholder="何をしますか？"
           className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
           required
           aria-required="true"
@@ -65,7 +65,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor={`todo-duedate-${isEditing ? 'edit' : 'add'}`} className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Due Date (Optional)
+            期限日 (任意)
           </label>
           <div className="relative">
             <input
@@ -80,14 +80,14 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
         </div>
         <div>
           <label htmlFor={`todo-tag-${isEditing ? 'edit' : 'add'}`} className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-            Tag (Optional)
+            タグ (任意)
           </label>
           <input
             id={`todo-tag-${isEditing ? 'edit' : 'add'}`}
             type="text"
             value={tag}
             onChange={(e) => setTag(e.target.value)}
-            placeholder="e.g., Work, Personal"
+            placeholder="例: 仕事、プライベート"
             className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:bg-slate-100 dark:focus:bg-slate-700 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
 />
         </div>
@@ -95,13 +95,13 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
 
       <div>
         <label htmlFor={`todo-details-${isEditing ? 'edit' : 'add'}`} className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-          Details (Optional)
+          詳細 (任意)
         </label>
         <textarea
           id={`todo-details-${isEditing ? 'edit' : 'add'}`}
           value={details}
           onChange={(e) => setDetails(e.target.value)}
-          placeholder="Add more details about the task..."
+          placeholder="タスクの詳細を追加..."
           rows={3}
           className="w-full p-3 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:bg-slate-100 dark:focus:bg-slate-700 dark:text-slate-200 dark:placeholder-slate-400 transition-colors"
         />
@@ -114,17 +114,17 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, initialData, onCancel, is
             onClick={onCancel}
             className="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 dark:text-slate-300 dark:bg-slate-600 dark:hover:bg-slate-500 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-50 dark:focus:ring-offset-slate-800 focus:ring-slate-400 dark:focus:ring-slate-500 transition-colors"
           >
-            Cancel
+            キャンセル
           </button>
         )}
         <button
           type="submit"
           className="px-5 py-2.5 flex items-center justify-center text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-600 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-50 dark:focus:ring-offset-slate-600 focus:ring-blue-500 transition-colors"
         >
-          {isEditing ? 'Save Changes' : (
+          {isEditing ? '変更を保存' : (
             <>
               <PlusIcon className="text-lg mr-1.5" />
-              Add Task
+              タスクを追加
             </>
           )}
         </button>

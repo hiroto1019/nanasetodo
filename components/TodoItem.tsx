@@ -58,8 +58,8 @@ const TodoItem: React.FC<TodoItemProps> = ({
               onClick={handleFavoriteToggle}
               className={`p-1 mr-1.5 text-slate-400 dark:text-slate-500 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors rounded-full flex-shrink-0
                          ${(todo.deleted || isTrashView) ? 'cursor-not-allowed opacity-50' : ''}`}
-              aria-label={todo.isFavorite ? "Remove from favorites" : "Add to favorites"}
-              title={todo.isFavorite ? "Remove from favorites" : "Add to favorites"}
+              aria-label={todo.isFavorite ? "お気に入りから削除" : "お気に入りに追加"}
+              title={todo.isFavorite ? "お気に入りから削除" : "お気に入りに追加"}
               disabled={todo.deleted || isTrashView}
             >
               <StarIcon 
@@ -98,7 +98,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
           <div className="ml-12 mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs"> {/* items-centerを追加して縦方向を中央揃え */}
             {todo.dueDate && (
               <span className={`px-1.5 py-0.5 rounded-full ${todo.completed && !todo.deleted ? 'bg-slate-200 text-slate-500 dark:bg-slate-700 dark:text-slate-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-700/30 dark:text-amber-300'} ${todo.deleted ? 'bg-gray-200 text-slate-400 dark:bg-slate-700 dark:text-slate-500' : ''}`}>
-                Due: {formatDate(todo.dueDate)}
+                期限: {formatDate(todo.dueDate)}
               </span>
             )}
             {todo.tag && (
@@ -108,7 +108,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
             )}
              {todo.updatedAt && (
                 <span className={`text-slate-400 dark:text-slate-500 text-[10px] italic ${todo.deleted ? 'text-slate-400 dark:text-slate-500' : ''}`}>
-                    Updated: {new Date(todo.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                    更新: {new Date(todo.updatedAt).toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' })}
                 </span>
             )}
           </div>
@@ -120,8 +120,8 @@ const TodoItem: React.FC<TodoItemProps> = ({
              <button
               onClick={() => onRestore(todo.id)}
               className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400 transition-colors rounded-full hover:bg-green-100 dark:hover:bg-green-700/30"
-              aria-label={`Restore task: ${todo.text}`}
-              title="Restore task"
+                          aria-label={`タスクを復元: ${todo.text}`}
+            title="タスクを復元"
             >
               <ActualRestoreIcon className="text-md" />
             </button>
@@ -130,8 +130,8 @@ const TodoItem: React.FC<TodoItemProps> = ({
             <button
               onClick={() => onEdit(todo)}
               className="p-1.5 text-slate-400 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-full hover:bg-blue-100 dark:hover:bg-blue-700/30"
-              aria-label={`Edit task: ${todo.text}`}
-              title="Edit task"
+              aria-label={`タスクを編集: ${todo.text}`}
+              title="タスクを編集"
             >
               <EditIcon className="text-md" />
             </button>
@@ -140,15 +140,15 @@ const TodoItem: React.FC<TodoItemProps> = ({
             onClick={() => onDelete(todo.id)}
             className={`p-1.5 transition-colors rounded-full 
               ${isTrashView ? 'text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-100 dark:hover:bg-red-700/30' : 'text-slate-400 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-700/30'}`}
-            aria-label={isTrashView ? `Permanently delete task: ${todo.text}` : `Move task to trash: ${todo.text}`}
-            title={isTrashView ? `Permanently delete task` : `Move task to trash`}
+            aria-label={isTrashView ? `タスクを完全に削除: ${todo.text}` : `タスクをゴミ箱に移動: ${todo.text}`}
+            title={isTrashView ? `タスクを完全に削除` : `タスクをゴミ箱に移動`}
           >
             <DeleteIcon className="text-md" />
           </button>
         </div>
       </div>
       {isTrashView && (
-        <p className="text-xs text-slate-400 dark:text-slate-500 italic mt-1 pl-12">In trash</p>
+        <p className="text-xs text-slate-400 dark:text-slate-500 italic mt-1 pl-12">ゴミ箱内</p>
       )}
     </li>
   );
