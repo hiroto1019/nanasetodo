@@ -52,11 +52,11 @@ const TodoItem: React.FC<TodoItemProps> = ({
     <li className={`${itemBaseStyle} ${deletedStyle} ${completedStyle}`}>
       <div className="flex items-start">
         {/* ▼▼▼ UI修正ゾーン ▼▼▼ */}
-        <div className="flex-grow mr-10">
-          <div className="flex items-center"> {/* mb-1を削除 */}
+        <div className="flex-grow pr-16"> {/* mr-10をpr-16に変更して右側のアイコン用のスペースを確保 */}
+          <div className="flex items-start"> {/* items-centerをitems-startに変更 */}
             <button
               onClick={handleFavoriteToggle}
-              className={`p-1 mr-1.5 text-slate-400 dark:text-slate-500 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors rounded-full 
+              className={`p-1 mr-1.5 text-slate-400 dark:text-slate-500 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors rounded-full flex-shrink-0
                          ${(todo.deleted || isTrashView) ? 'cursor-not-allowed opacity-50' : ''}`}
               aria-label={todo.isFavorite ? "Remove from favorites" : "Add to favorites"}
               title={todo.isFavorite ? "Remove from favorites" : "Add to favorites"}
@@ -78,17 +78,16 @@ const TodoItem: React.FC<TodoItemProps> = ({
               disabled={todo.deleted || isTrashView}
             />
             {/* タイトルと詳細をまとめるdivを追加 */}
-            <div className="flex flex-col"> 
+            <div className="flex flex-col min-w-0 flex-1"> {/* min-w-0とflex-1を追加してテキストの折り返しを有効化 */}
               <label
                 htmlFor={`todo-check-${todo.id}`} 
                 id={`todo-text-${todo.id}`}
-                className={`text-md font-medium cursor-pointer ${todo.completed && !todo.deleted ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-800 dark:text-slate-100'} ${todo.deleted ? 'text-slate-500 dark:text-slate-400 line-through' : ''}`}
+                className={`text-md font-medium cursor-pointer break-words ${todo.completed && !todo.deleted ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-800 dark:text-slate-100'} ${todo.deleted ? 'text-slate-500 dark:text-slate-400 line-through' : ''}`}
               >
                 {todo.text}
               </label>
               {todo.details && (
-                // ml-12を削除し、マージンを調整
-                <p className={`text-xs whitespace-pre-wrap ${todo.completed && !todo.deleted ? 'text-slate-400 dark:text-slate-500' : 'text-slate-600 dark:text-slate-400'} ${todo.deleted ? 'text-slate-500 dark:text-slate-400' : ''}`}>
+                <p className={`text-xs whitespace-pre-wrap break-words ${todo.completed && !todo.deleted ? 'text-slate-400 dark:text-slate-500' : 'text-slate-600 dark:text-slate-400'} ${todo.deleted ? 'text-slate-500 dark:text-slate-400' : ''}`}>
                   {todo.details}
                 </p>
               )}
